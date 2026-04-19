@@ -81,7 +81,7 @@ const App = () => {
             <Route index element={<StorefrontHome />} />
             <Route path="shop" element={<Shop />} />
             <Route path="product/:id" element={<ProductDetail />} />
-            
+
             {/* Customer routes (nested for context) */}
             <Route
               path="checkout"
@@ -140,7 +140,9 @@ const App = () => {
                     404
                   </h1>
                   <p className="text-2xl font-bold mb-2">Page Not Found</p>
-                  <span className="text-xs text-surface-400 ml-2">Vexora — 404</span>
+                  <span className="text-xs text-surface-400 ml-2">
+                    Vexora — 404
+                  </span>
                   <p className="text-surface-500 mb-8">
                     The page youre looking for doesnt exist.
                   </p>
@@ -158,3 +160,5 @@ const App = () => {
 };
 
 export default App;
+
+//contra  , peopleperhour  , toptal
