@@ -1,17 +1,36 @@
-import { Outlet, Link } from 'react-router-dom';
-import { useCart } from '../../contexts/CartContext';
-import { ShoppingCart, Zap } from 'lucide-react';
-import CartDrawer from '../storefront/CartDrawer';
+import { useState, useEffect } from "react";
+import { Outlet, Link, useParams } from "react-router-dom";
+import { useCart } from "../../contexts/CartContext";
+import { ShoppingCart, Zap } from "lucide-react";
+import api from "../../services/api";
+import CartDrawer from "../storefront/CartDrawer";
 
-const PublicLayout = ({ businessName = 'Vexora Store' }) => {
+const PublicLayout = () => {
+  const { slug } = useParams();
   const { totalItems, setIsOpen } = useCart();
+  const [business, setBusiness] = useState(null);
+
+  useEffect(() => {
+    const fetchBusiness = async () => {
+      try {
+        const res = await api.get(`/business/public/${slug}`);
+        setBusiness(res.data.data.business);
+        document.title = `${res.data.data.business.name} | Vexora Store`;
+      } catch (err) {
+        console.error("Failed to fetch business info", err);
+      }
+    };
+    if (slug) fetchBusiness();
+  }, [slug]);
+
+  const businessName = business?.name || "Vexora Store";
 
   return (
     <div className="min-h-screen bg-surface-50 dark:bg-surface-950">
       {/* Storefront Navbar */}
       <header className="glass sticky top-0 z-30 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to={`/store/${slug}`} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
             </div>
@@ -19,8 +38,21 @@ const PublicLayout = ({ businessName = 'Vexora Store' }) => {
           </Link>
 
           <div className="flex items-center gap-4">
-            <Link to="/" className="btn-ghost text-sm">Home</Link>
-            <Link to="/shop" className="btn-ghost text-sm">Shop</Link>
+            <Link
+              to={`/store/${slug}`}
+              className="text-sm font-medium hover:text-primary-500 transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              to={`/store/${slug}/shop`}
+              className="text-sm font-medium hover:text-primary-500 transition-colors"
+            >
+              Shop
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-4">
             <button
               onClick={() => setIsOpen(true)}
               className="relative p-2.5 rounded-xl hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
@@ -32,7 +64,12 @@ const PublicLayout = ({ businessName = 'Vexora Store' }) => {
                 </span>
               )}
             </button>
-            <Link to="/login" className="btn-primary text-sm !py-2 !px-4">Login</Link>
+            <Link
+              to={`/store/${slug}/login`}
+              className="btn-primary text-sm !py-2 !px-4"
+            >
+              Login
+            </Link>
           </div>
         </div>
       </header>
@@ -52,7 +89,9 @@ const PublicLayout = ({ businessName = 'Vexora Store' }) => {
             </div>
             <span className="font-bold text-white">{businessName}</span>
           </div>
-          <p className="text-sm">Powered by Vexora • © {new Date().getFullYear()}</p>
+          <p className="text-sm">
+            Powered by Vexora • © {new Date().getFullYear()}
+          </p>
         </div>
       </footer>
     </div>

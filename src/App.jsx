@@ -28,6 +28,7 @@ const ProductDetail = lazy(() => import("./pages/storefront/ProductDetail"));
 const Checkout = lazy(() => import("./pages/storefront/Checkout"));
 const OrderSuccess = lazy(() => import("./pages/storefront/OrderSuccess"));
 const OrderHistory = lazy(() => import("./pages/storefront/OrderHistory"));
+const StoreAuth = lazy(() => import("./pages/storefront/Auth"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -81,6 +82,7 @@ const App = () => {
             <Route index element={<StorefrontHome />} />
             <Route path="shop" element={<Shop />} />
             <Route path="product/:id" element={<ProductDetail />} />
+            <Route path="login" element={<StoreAuth />} />
 
             {/* Customer routes (nested for context) */}
             <Route
