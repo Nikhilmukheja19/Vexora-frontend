@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://vexora-backend-1.onrender.com/api",
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
