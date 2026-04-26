@@ -1,7 +1,8 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 import { CheckCircle, Package, ArrowRight } from "lucide-react";
 
 const OrderSuccess = () => {
+  const { slug } = useParams();
   const { state } = useLocation();
   const order = state?.order;
 
@@ -42,7 +43,7 @@ const OrderSuccess = () => {
           >
             <Package className="w-4 h-4" /> Track My Orders
           </Link>
-          <Link to="/store/:slug" className="btn-secondary">
+          <Link to={`/store/${slug}`} className="btn-secondary">
             Continue Shopping
           </Link>
         </div>

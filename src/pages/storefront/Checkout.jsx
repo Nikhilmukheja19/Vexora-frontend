@@ -43,7 +43,7 @@ const Checkout = () => {
       <ShoppingBag className="w-16 h-16 mx-auto text-surface-300 mb-4" />
       <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
       <p className="text-surface-500 mb-6">Add some products before checking out.</p>
-      <button onClick={() => navigate(-1)} className="btn-primary">Continue Shopping</button>
+      <button onClick={() => navigate(`/store/${slug}`)} className="btn-primary">Continue Shopping</button>
     </div>
   );
 
