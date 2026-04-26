@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../contexts/CartContext";
 import { ShoppingCart, Zap, User, LogOut } from "lucide-react";
 import api from "../../services/api";
 import CartDrawer from "../storefront/CartDrawer";
