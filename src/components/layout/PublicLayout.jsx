@@ -50,9 +50,6 @@ const PublicLayout = () => {
             >
               Shop
             </Link>
-          </div>
-
-          <div className="flex items-center gap-4">
             <button
               onClick={() => setIsOpen(true)}
               className="relative p-2.5 rounded-xl hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
@@ -64,10 +61,7 @@ const PublicLayout = () => {
                 </span>
               )}
             </button>
-            <Link
-              to={`/store/${slug}/login`}
-              className="btn-primary text-sm !py-2 !px-4"
-            >
+            <Link to="/login" className="btn-primary text-sm !py-2 !px-4">
               Login
             </Link>
           </div>
