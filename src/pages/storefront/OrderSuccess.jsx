@@ -42,7 +42,7 @@ const OrderSuccess = () => {
           >
             <Package className="w-4 h-4" /> Track My Orders
           </Link>
-          <Link to="/store" className="btn-secondary">
+          <Link to="/store/:slug" className="btn-secondary">
             Continue Shopping
           </Link>
         </div>
