@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://vexora-backend-1.onrender.com/api",
+  baseURL: window.location.hostname === "localhost" 
+    ? "http://localhost:5000/api" 
+    : "https://vexora-backend-1.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,6 +12,9 @@ const api = axios.create({
 // Request interceptor to attach JWT
 api.interceptors.request.use(
   (config) => {
+    // If Authorization header is already set (e.g. manually in AuthContext), respect it
+    if (config.headers.Authorization) return config;
+
     const token = localStorage.getItem("token");
     const customerToken = localStorage.getItem("customerToken");
 
