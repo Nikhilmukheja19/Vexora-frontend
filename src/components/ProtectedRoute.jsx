@@ -2,8 +2,12 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
-  const { isAuthenticated, isAdmin, loading } = useAuth();
+  const { isAuthenticated, isCustomerAuthenticated, isAdmin, loading } = useAuth();
   const location = useLocation();
+
+  // Detect if we are on a storefront route
+  const isStorefront = location.pathname.startsWith('/store/');
+  const storeSlug = isStorefront ? location.pathname.split('/')[2] : null;
 
   if (loading) {
     return (
@@ -16,8 +20,14 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
     );
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  if (isStorefront) {
+    if (!isCustomerAuthenticated) {
+      return <Navigate to={`/store/${storeSlug}/customerauth/login`} state={{ from: location }} replace />;
+    }
+  } else {
+    if (!isAuthenticated) {
+      return <Navigate to="/login" state={{ from: location }} replace />;
+    }
   }
 
   if (requireAdmin && !isAdmin) {

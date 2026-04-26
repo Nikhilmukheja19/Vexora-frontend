@@ -82,7 +82,7 @@ const PublicLayout = () => {
               </div>
             ) : (
               <Link
-                to={`/store/${slug}/login`}
+                to={`/store/${slug}/customerauth/login`}
                 className="btn-primary text-sm !py-2 !px-4"
               >
                 Login
