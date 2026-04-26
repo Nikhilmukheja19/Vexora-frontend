@@ -23,6 +23,7 @@ const PublicLayout = () => {
     if (slug) fetchBusiness();
   }, [slug]);
 
+  const token = localStorage.getItem("token");
   const businessName = business?.name || "Vexora Store";
 
   return (
@@ -61,9 +62,17 @@ const PublicLayout = () => {
                 </span>
               )}
             </button>
-            <Link to="/login" className="btn-primary text-sm !py-2 !px-4">
-              Login
-            </Link>
+            {token ? (
+              <>
+                <Link to="/login" className="btn-primary text-sm !py-2 !px-4">
+                  Login
+                </Link>
+              </>
+            ) : (
+              <button className="btn-primary text-sm !py-2 !px-4">
+                Logout
+              </button>
+            )}
           </div>
         </div>
       </header>
