@@ -18,12 +18,20 @@ api.interceptors.request.use(
     const token = localStorage.getItem("token");
     const customerToken = localStorage.getItem("customerToken");
 
-    // Logic: Use customerToken for customer routes or if specifically logged in as customer
-    // Otherwise use the main admin token
-    if (config.url.includes("/customer-auth") || (!token && customerToken)) {
-      if (customerToken) config.headers.Authorization = `Bearer ${customerToken}`;
+    // Logic: Use customerToken for customer routes, storefront pages, or if only customer is logged in
+    const isStorefrontPath = window.location.pathname.startsWith('/store') || window.location.pathname === '/my-orders';
+    const isCustomerApi = config.url.includes("/customer-auth") || config.url.includes("/orders/my-orders");
+
+    if (isStorefrontPath || isCustomerApi || (!token && customerToken)) {
+      if (customerToken) {
+        config.headers.Authorization = `Bearer ${customerToken}`;
+      } else if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     } else if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else if (customerToken) {
+      config.headers.Authorization = `Bearer ${customerToken}`;
     }
     
     return config;

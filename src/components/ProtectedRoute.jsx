@@ -5,9 +5,9 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   const { isAuthenticated, isCustomerAuthenticated, isAdmin, loading } = useAuth();
   const location = useLocation();
 
-  // Detect if we are on a storefront route
-  const isStorefront = location.pathname.startsWith('/store/');
-  const storeSlug = isStorefront ? location.pathname.split('/')[2] : null;
+  // Detect if we are on a storefront/customer route
+  const isStorefront = location.pathname.startsWith('/store/') || location.pathname === '/my-orders';
+  const storeSlug = location.pathname.startsWith('/store/') ? location.pathname.split('/')[2] : null;
 
   if (loading) {
     return (
@@ -22,7 +22,8 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
 
   if (isStorefront) {
     if (!isCustomerAuthenticated) {
-      return <Navigate to={`/store/${storeSlug}/customerauth/login`} state={{ from: location }} replace />;
+      const loginPath = storeSlug ? `/store/${storeSlug}/customerauth/login` : '/login';
+      return <Navigate to={loginPath} state={{ from: location }} replace />;
     }
   } else {
     if (!isAuthenticated) {
