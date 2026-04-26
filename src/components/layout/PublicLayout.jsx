@@ -64,10 +64,7 @@ const PublicLayout = () => {
             </button>
             {token ? (
               <>
-                <Link
-                  to="/storelogin"
-                  className="btn-primary text-sm !py-2 !px-4"
-                >
+                <Link to="/login" className="btn-primary text-sm !py-2 !px-4">
                   Login
                 </Link>
               </>

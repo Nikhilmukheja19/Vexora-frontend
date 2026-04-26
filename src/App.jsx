@@ -82,7 +82,7 @@ const App = () => {
             <Route index element={<StorefrontHome />} />
             <Route path="shop" element={<Shop />} />
             <Route path="product/:id" element={<ProductDetail />} />
-            <Route path="/storelogin" element={<StoreAuth />} />
+            <Route path="login" element={<StoreAuth />} />
 
             {/* Customer routes (nested for context) */}
             <Route
