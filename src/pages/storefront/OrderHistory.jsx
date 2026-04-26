@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import { Package, Clock } from "lucide-react";
 
@@ -12,13 +13,14 @@ const statusColors = {
 };
 
 const OrderHistory = () => {
+  const { slug } = useParams();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await api.get("/orders/my-orders");
+        const res = await api.get(`/orders/my-orders?businessSlug=${slug}`);
         setOrders(res.data.data.orders);
       } catch (e) {
         console.log(e);
@@ -26,8 +28,8 @@ const OrderHistory = () => {
         setLoading(false);
       }
     };
-    fetch();
-  }, []);
+    if (slug) fetch();
+  }, [slug]);
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">

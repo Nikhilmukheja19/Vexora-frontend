@@ -101,17 +101,15 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="my-orders"
+              element={
+                <ProtectedRoute>
+                  <OrderHistory />
+                </ProtectedRoute>
+              }
+            />
           </Route>
-
-          {/* Global Customer routes */}
-          <Route
-            path="/my-orders"
-            element={
-              <ProtectedRoute>
-                <OrderHistory />
-              </ProtectedRoute>
-            }
-          />
 
           {/* Dashboard (admin only) */}
           <Route

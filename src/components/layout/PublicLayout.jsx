@@ -66,7 +66,7 @@ const PublicLayout = () => {
             {isCustomerAuthenticated ? (
               <div className="flex items-center gap-3">
                 <Link
-                  to="/my-orders"
+                  to={`/store/${slug}/my-orders`}
                   className="p-2.5 rounded-xl hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
                   title="My Orders"
                 >
