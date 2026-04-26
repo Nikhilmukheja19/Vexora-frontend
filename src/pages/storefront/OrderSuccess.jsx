@@ -1,5 +1,5 @@
-import { useLocation, Link } from 'react-router-dom';
-import { CheckCircle, Package, ArrowRight } from 'lucide-react';
+import { useLocation, Link } from "react-router-dom";
+import { CheckCircle, Package, ArrowRight } from "lucide-react";
 
 const OrderSuccess = () => {
   const { state } = useLocation();
@@ -23,19 +23,28 @@ const OrderSuccess = () => {
             </div>
             <div className="flex justify-between">
               <span className="text-surface-500">Total</span>
-              <span className="font-bold text-primary-600">₹{order.total?.toFixed(2)}</span>
+              <span className="font-bold text-primary-600">
+                ₹{order.total?.toFixed(2)}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-surface-500">Payment</span>
-              <span className="capitalize badge-warning">{order.paymentMethod}</span>
+              <span className="capitalize badge-warning">
+                {order.paymentMethod}
+              </span>
             </div>
           </div>
         )}
         <div className="flex flex-col gap-3">
-          <Link to="/my-orders" className="btn-primary flex items-center justify-center gap-2">
+          <Link
+            to="/my-orders"
+            className="btn-primary flex items-center justify-center gap-2"
+          >
             <Package className="w-4 h-4" /> Track My Orders
           </Link>
-          <Link to="/" className="btn-secondary">Continue Shopping</Link>
+          <Link to="/store" className="btn-secondary">
+            Continue Shopping
+          </Link>
         </div>
       </div>
     </div>
