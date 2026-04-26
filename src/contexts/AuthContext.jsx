@@ -72,8 +72,8 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const customerLogin = async (email, password, slug) => {
-    const res = await api.post('/customer-auth/login', { email, password, slug });
+  const customerLogin = async (email, password, businessSlug) => {
+    const res = await api.post('/customer-auth/login', { email, password, businessSlug });
     const { token: newToken, user: userData } = res.data.data;
     localStorage.setItem('customerToken', newToken);
     setCustomerToken(newToken);
