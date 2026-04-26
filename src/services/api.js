@@ -11,9 +11,16 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-    if (token) {
+    const customerToken = localStorage.getItem("customerToken");
+
+    // Logic: Use customerToken for customer routes or if specifically logged in as customer
+    // Otherwise use the main admin token
+    if (config.url.includes("/customer-auth") || (!token && customerToken)) {
+      if (customerToken) config.headers.Authorization = `Bearer ${customerToken}`;
+    } else if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    
     return config;
   },
   (error) => Promise.reject(error),
@@ -24,9 +31,14 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("token");
-      if (window.location.pathname.startsWith("/dashboard")) {
-        window.location.href = "/login";
+      // Clear whichever token might be invalid
+      if (window.location.pathname.includes("/store")) {
+        localStorage.removeItem("customerToken");
+      } else {
+        localStorage.removeItem("token");
+        if (window.location.pathname.startsWith("/dashboard")) {
+          window.location.href = "/login";
+        }
       }
     }
     return Promise.reject(error);

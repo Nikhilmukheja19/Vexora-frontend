@@ -9,7 +9,7 @@ const StoreAuth = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { updateUser } = useAuth(); // We'll manually update the context since it's a different login
+  const { customerLogin, customerRegister } = useAuth();
   
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -25,17 +25,15 @@ const StoreAuth = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const endpoint = isLogin ? '/customer-auth/login' : '/customer-auth/register';
-      const res = await api.post(endpoint, {
-        ...formData,
-        businessSlug: slug
-      });
+      if (isLogin) {
+        await customerLogin(formData.email, formData.password, slug);
+      } else {
+        await customerRegister({
+          ...formData,
+          businessSlug: slug
+        });
+      }
       
-      const { token, user } = res.data.data;
-      localStorage.setItem('token', token);
-      updateUser(user);
-      
-      toast.success(isLogin ? 'Welcome back!' : 'Account created successfully!');
       navigate(from, { replace: true });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Authentication failed');
