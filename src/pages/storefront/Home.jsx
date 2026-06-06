@@ -61,16 +61,20 @@ const StorefrontHome = () => {
               {products.map(product => (
                 <div key={product._id} className="glass-card overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <div className="relative aspect-square bg-surface-100 dark:bg-surface-800 overflow-hidden">
-                    {product.images?.[0] ? (
-                      <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-surface-300"><ShoppingBag className="w-12 h-12" /></div>
-                    )}
+                    <Link to={`/store/${slug}/product/${product._id}`} className="block w-full h-full">
+                      {product.images?.[0] ? (
+                        <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-surface-300"><ShoppingBag className="w-12 h-12" /></div>
+                      )}
+                    </Link>
                   </div>
                   <div className="p-5">
-                    <p className="text-xs text-surface-500 uppercase tracking-wide">{product.category}</p>
-                    <h3 className="font-bold text-lg mt-1">{product.name}</h3>
-                    <p className="text-surface-500 text-sm mt-1 line-clamp-2">{product.description}</p>
+                    <Link to={`/store/${slug}/product/${product._id}`} className="block">
+                      <p className="text-xs text-surface-500 uppercase tracking-wide">{product.category}</p>
+                      <h3 className="font-bold text-lg mt-1 hover:text-primary-500 transition-colors">{product.name}</h3>
+                      <p className="text-surface-500 text-sm mt-1 line-clamp-2">{product.description}</p>
+                    </Link>
                     <div className="flex items-center justify-between mt-4">
                       <span className="text-xl font-bold text-primary-600 dark:text-primary-400">₹{product.price}</span>
                       <button onClick={() => addItem(product)} className="btn-primary !px-4 !py-2 text-sm">Add to Cart</button>

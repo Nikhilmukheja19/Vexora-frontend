@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, Link } from "react-router-dom";
 import { CartProvider } from "./contexts/CartContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardLayout from "./components/layout/DashboardLayout";
@@ -41,6 +41,10 @@ const PageLoader = () => (
 
 const App = () => {
   const { user } = useAuth();
+  const location = useLocation();
+
+  const isStorefront = location.pathname.startsWith("/store/");
+  const storeSlug = isStorefront ? location.pathname.split("/")[2] : null;
 
   return (
     <CartProvider>
@@ -141,14 +145,17 @@ const App = () => {
                   </h1>
                   <p className="text-2xl font-bold mb-2">Page Not Found</p>
                   <span className="text-xs text-surface-400 ml-2">
-                    Vexora — 404
+                    {isStorefront ? "Storefront — 404" : "Vexora — 404"}
                   </span>
                   <p className="text-surface-500 mb-8">
                     The page youre looking for doesnt exist.
                   </p>
-                  <a href="/" className="btn-primary">
-                    Go Home
-                  </a>
+                  <Link
+                    to={isStorefront && storeSlug ? `/store/${storeSlug}` : "/"}
+                    className="btn-primary"
+                  >
+                    {isStorefront ? "Go to Store Homepage" : "Go Home"}
+                  </Link>
                 </div>
               </div>
             }

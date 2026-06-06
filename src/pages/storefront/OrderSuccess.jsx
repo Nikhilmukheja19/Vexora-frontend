@@ -38,7 +38,7 @@ const OrderSuccess = () => {
         )}
         <div className="flex flex-col gap-3">
           <Link
-            to="/my-orders"
+            to={`/store/${slug}/my-orders`}
             className="btn-primary flex items-center justify-center gap-2"
           >
             <Package className="w-4 h-4" /> Track My Orders
