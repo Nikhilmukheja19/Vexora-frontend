@@ -2,36 +2,20 @@ import { useState, useEffect } from "react";
 import { Outlet, Link, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
+import { StoreThemeProvider, useStoreTheme } from "../../contexts/StoreThemeContext";
 import { ShoppingCart, Zap, User, LogOut } from "lucide-react";
 import api from "../../services/api";
 import CartDrawer from "../storefront/CartDrawer";
 
-const PublicLayout = () => {
-  const { slug } = useParams();
+const StorefrontShell = ({ business, businessName, slug }) => {
   const { totalItems, setIsOpen } = useCart();
   const { isCustomerAuthenticated, customerLogout } = useAuth();
-  const [business, setBusiness] = useState(null);
-
-  useEffect(() => {
-    const fetchBusiness = async () => {
-      try {
-        const res = await api.get(`/business/public/${slug}`);
-        setBusiness(res.data.data.business);
-        document.title = `${res.data.data.business.name} | Vexora Store`;
-      } catch (err) {
-        console.error("Failed to fetch business info", err);
-      }
-    };
-    if (slug) fetchBusiness();
-  }, [slug]);
-
-  const businessName = business?.name || "Vexora Store";
+  const { theme } = useStoreTheme();
 
   return (
-    <div className="min-h-screen bg-surface-50 dark:bg-surface-950">
-      {/* Storefront Navbar */}
-      <header className="glass sticky top-0 z-30 px-6 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen">
+      <header className="store-header glass sticky top-0 z-30 px-6 py-3">
+        <div className="store-header-inner max-w-7xl mx-auto flex items-center justify-between">
           <Link to={`/store/${slug}`} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
@@ -39,16 +23,16 @@ const PublicLayout = () => {
             <span className="font-bold text-lg">{businessName}</span>
           </Link>
 
-          <div className="flex items-center gap-4">
+          <nav className="store-header-nav flex items-center gap-4">
             <Link
               to={`/store/${slug}`}
-              className="text-sm font-medium hover:text-primary-500 transition-colors"
+              className="text-sm font-medium store-text-primary store-nav-link transition-colors"
             >
               Home
             </Link>
             <Link
               to={`/store/${slug}/shop`}
-              className="text-sm font-medium hover:text-primary-500 transition-colors"
+              className="text-sm font-medium text-surface-600 dark:text-surface-300 store-nav-link transition-colors"
             >
               Shop
             </Link>
@@ -58,7 +42,7 @@ const PublicLayout = () => {
             >
               <ShoppingCart className="w-5 h-5" />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 w-5 h-5 store-bg-primary text-white text-xs rounded-full flex items-center justify-center font-bold">
                   {totalItems}
                 </span>
               )}
@@ -88,31 +72,60 @@ const PublicLayout = () => {
                 Login
               </Link>
             )}
-          </div>
+          </nav>
         </div>
       </header>
 
       <main>
-        <Outlet />
+        <Outlet context={{ business }} />
       </main>
 
       <CartDrawer />
 
-      {/* Footer */}
-      <footer className="bg-surface-900 dark:bg-surface-950 text-surface-400 py-12">
+      <footer className={`store-footer py-12 ${theme.footerStyle === 'minimal' ? '!py-6' : ''}`}>
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
+          {theme.footerStyle !== 'minimal' && (
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+                <Zap className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-bold text-white">{businessName}</span>
             </div>
-            <span className="font-bold text-white">{businessName}</span>
-          </div>
-          <p className="text-sm">
-            Powered by Vexora • © {new Date().getFullYear()}
+          )}
+          <p className={`text-sm ${theme.footerStyle === 'minimal' ? 'text-surface-500' : 'text-surface-400'}`}>
+            {theme.footerStyle === 'minimal'
+              ? `© ${new Date().getFullYear()} ${businessName} • Powered by Vexora`
+              : `Powered by Vexora • © ${new Date().getFullYear()}`}
           </p>
         </div>
       </footer>
     </div>
+  );
+};
+
+const PublicLayout = () => {
+  const { slug } = useParams();
+  const [business, setBusiness] = useState(null);
+
+  useEffect(() => {
+    const fetchBusiness = async () => {
+      try {
+        const res = await api.get(`/business/public/${slug}`);
+        setBusiness(res.data.data.business);
+        document.title = `${res.data.data.business.name} | Vexora Store`;
+      } catch (err) {
+        console.error("Failed to fetch business info", err);
+      }
+    };
+    if (slug) fetchBusiness();
+  }, [slug]);
+
+  const businessName = business?.name || "Vexora Store";
+
+  return (
+    <StoreThemeProvider business={business}>
+      <StorefrontShell business={business} businessName={businessName} slug={slug} />
+    </StoreThemeProvider>
   );
 };
 

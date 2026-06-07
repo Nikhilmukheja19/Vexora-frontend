@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
   const { slug } = useParams();
 
   return (
-    <div className="glass-card overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    <div className="store-product-card glass-card overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
       <div className="relative aspect-square overflow-hidden bg-surface-100 dark:bg-surface-800">
         <Link to={`/store/${slug}/product/${product._id}`} className="block w-full h-full">
           {product.images?.[0] ? (
@@ -39,16 +39,16 @@ const ProductCard = ({ product }) => {
             e.stopPropagation();
             addItem(product);
           }}
-          className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-white/90 dark:bg-surface-800/90 backdrop-blur-sm shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-primary-500 hover:text-white z-10"
+          className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-white/90 dark:bg-surface-800/90 backdrop-blur-sm shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 store-bg-primary hover:text-white z-10"
         >
           <ShoppingCart className="w-4 h-4" />
         </button>
       </div>
       <Link to={`/store/${slug}/product/${product._id}`} className="block p-4">
         <p className="text-xs text-surface-500 uppercase tracking-wide mb-1">{product.category}</p>
-        <h3 className="font-semibold text-surface-900 dark:text-white truncate hover:text-primary-500 transition-colors">{product.name}</h3>
+        <h3 className="font-semibold text-surface-900 dark:text-white truncate hover:store-text-primary transition-colors">{product.name}</h3>
         <div className="flex items-center gap-2 mt-2">
-          <span className="text-lg font-bold text-primary-600 dark:text-primary-400">₹{product.price}</span>
+          <span className="text-lg font-bold store-text-primary">₹{product.price}</span>
           {product.comparePrice > product.price && (
             <span className="text-sm text-surface-400 line-through">₹{product.comparePrice}</span>
           )}

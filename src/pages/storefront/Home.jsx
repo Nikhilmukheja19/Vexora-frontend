@@ -29,16 +29,16 @@ const StorefrontHome = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative py-24 px-6 overflow-hidden bg-gradient-to-br from-primary-600 via-purple-600 to-accent-600">
-        <div className="absolute inset-0">
+      <section className="store-hero relative py-24 px-6">
+        <div className="absolute inset-0 pointer-events-none">
           <div className="absolute w-96 h-96 bg-white/10 rounded-full -top-20 -right-20 animate-float" />
           <div className="absolute w-64 h-64 bg-white/10 rounded-full bottom-10 left-10 animate-float" style={{animationDelay:'2s'}} />
         </div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
           {business?.logo && <img src={business.logo} alt="logo" className="w-20 h-20 rounded-2xl mx-auto mb-6 shadow-xl" />}
-          <h1 className="text-5xl font-extrabold text-white mb-4">{business?.name || 'Welcome to Our Store'}</h1>
-          <p className="text-xl text-white/80 mb-8 max-w-xl mx-auto">{business?.description || 'Discover our amazing collection of products.'}</p>
-          <Link to={`/store/${slug}/shop`} className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 font-bold rounded-xl hover:bg-primary-50 hover:shadow-xl transition-all duration-300 group">
+          <h1 className="text-5xl font-extrabold store-hero-title mb-4">{business?.name || 'Welcome to Our Store'}</h1>
+          <p className="text-xl store-hero-subtitle mb-8 max-w-xl mx-auto">{business?.description || 'Discover our amazing collection of products.'}</p>
+          <Link to={`/store/${slug}/shop`} className="inline-flex items-center gap-2 px-8 py-4 bg-white store-text-primary font-bold rounded-xl hover:shadow-xl transition-all duration-300 group">
             Shop Now <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -59,7 +59,7 @@ const StorefrontHome = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map(product => (
-                <div key={product._id} className="glass-card overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div key={product._id} className="store-product-card glass-card overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <div className="relative aspect-square bg-surface-100 dark:bg-surface-800 overflow-hidden">
                     <Link to={`/store/${slug}/product/${product._id}`} className="block w-full h-full">
                       {product.images?.[0] ? (
@@ -72,11 +72,11 @@ const StorefrontHome = () => {
                   <div className="p-5">
                     <Link to={`/store/${slug}/product/${product._id}`} className="block">
                       <p className="text-xs text-surface-500 uppercase tracking-wide">{product.category}</p>
-                      <h3 className="font-bold text-lg mt-1 hover:text-primary-500 transition-colors">{product.name}</h3>
+                      <h3 className="font-bold text-lg mt-1 hover:store-text-primary transition-colors">{product.name}</h3>
                       <p className="text-surface-500 text-sm mt-1 line-clamp-2">{product.description}</p>
                     </Link>
                     <div className="flex items-center justify-between mt-4">
-                      <span className="text-xl font-bold text-primary-600 dark:text-primary-400">₹{product.price}</span>
+                      <span className="text-xl font-bold store-text-primary">₹{product.price}</span>
                       <button onClick={() => addItem(product)} className="btn-primary !px-4 !py-2 text-sm">Add to Cart</button>
                     </div>
                   </div>

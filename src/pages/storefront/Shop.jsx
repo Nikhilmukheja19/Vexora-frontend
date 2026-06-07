@@ -55,7 +55,7 @@ const Shop = () => {
         <div className="flex flex-wrap gap-2 mb-8">
           {['all', ...categories].map(cat => (
             <button key={cat} onClick={() => setCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${category === cat ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/25' : 'bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700'}`}>
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${category === cat ? 'store-category-active text-white shadow-lg' : 'bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700'}`}>
               {cat === 'all' ? 'All' : cat}
             </button>
           ))}
