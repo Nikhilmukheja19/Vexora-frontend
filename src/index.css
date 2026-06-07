@@ -321,7 +321,7 @@
     @apply border-t border-surface-100 dark:border-surface-800
            hover:bg-surface-50 dark:hover:bg-surface-800/30 transition-colors;
   }
-}
+
 
 @layer utilities {
   .text-balance {
