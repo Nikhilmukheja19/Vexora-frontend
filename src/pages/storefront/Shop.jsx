@@ -106,9 +106,4 @@ const Shop = () => {
 
 export default Shop;
 
-      {business?.settings?.enableChat && <ChatWidget businessSlug={slug} />}
-    </div>
-  );
-};
 
-export default Shop;
