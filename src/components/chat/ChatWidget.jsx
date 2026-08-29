@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Minimize2 } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
 import api from '../../services/api';
 
 const ChatWidget = ({ businessSlug }) => {

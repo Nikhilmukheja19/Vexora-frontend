@@ -20,7 +20,7 @@ import Loader from "../../components/ui/Loader";
 const ProductDetail = () => {
   const { slug, id } = useParams();
   const navigate = useNavigate();
-  const { addItem } = useCart();
+  const { addItem, buyItem } = useCart();
   const [product, setProduct] = useState(null);
   const [business, setBusiness] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -175,6 +175,7 @@ const ProductDetail = () => {
               </Button>
               <Button
                 onClick={() => {
+                  buyItem(product, quantity);
                   navigate(`/store/${slug}/checkout`);
                 }}
                 className="flex-1 order-1 xs:order-3 !py-2.5 sm:!py-3 lg:!py-4 text-xs xs:text-sm sm:text-base"

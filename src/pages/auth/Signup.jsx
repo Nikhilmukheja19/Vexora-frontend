@@ -82,13 +82,13 @@ const Signup = () => {
               >
                 Business Owner
               </button>
-              <button
+              {/* <button
                 type="button"
                 onClick={() => setFormData(p => ({ ...p, role: 'customer' }))}
                 className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${formData.role === 'customer' ? 'bg-white dark:bg-surface-700 shadow-sm text-primary-600' : 'text-surface-500'}`}
               >
                 Customer
-              </button>
+              </button> */}
             </div>
 
             <div>
